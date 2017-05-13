@@ -50,7 +50,6 @@ let pasteAndIndent = () => {
             let alphaIndex = indents[index];
             let expression;
             if (alphaIndex !== -1) {
-                console.log('' + baseOffset + offsetToFirstLine + offsets[index]);
                 pastedText[index] = ' '.repeat(baseOffset + offsetToFirstLine + offsets[index]) + line.substr(alphaIndex);
             }
         });
@@ -59,7 +58,6 @@ let pasteAndIndent = () => {
         editor.edit((editBuilder: vscode.TextEditorEdit) => {
             editBuilder.replace(modSelection, pastedText.join('\n'));
         });
-        vscode.window.showInformationMessage('fuck');
     })
 }
 
