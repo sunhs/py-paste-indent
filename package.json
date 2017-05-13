@@ -2,7 +2,7 @@
     "name": "py-paste-indent",
     "displayName": "Python Paste And Indent",
     "description": "paste and indent for python",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "publisher": "hyesun",
     "engines": {
         "vscode": "^1.12.0"
@@ -32,5 +32,9 @@
         "mocha": "^2.3.3",
         "@types/node": "^6.0.40",
         "@types/mocha": "^2.2.32"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/sunhs/py-paste-indent.git"
     }
 }
