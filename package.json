@@ -1,40 +1,43 @@
 {
-    "name": "py-paste-indent",
-    "displayName": "Python Paste And Indent",
-    "description": "paste and indent for python",
-    "version": "0.0.2",
-    "publisher": "hyesun",
-    "engines": {
-        "vscode": "^1.12.0"
-    },
-    "categories": [
-        "Other"
-    ],
-    "activationEvents": [
-        "onLanguage:python"
-    ],
-    "main": "./out/src/extension",
-    "contributes": {
-        "commands": [{
-            "command": "pyPasteIndent.pasteAndIndent",
-            "title": "Hello World"
-        }]
-    },
-    "scripts": {
-        "vscode:prepublish": "tsc -p ./",
-        "compile": "tsc -watch -p ./",
-        "postinstall": "node ./node_modules/vscode/bin/install",
-        "test": "node ./node_modules/vscode/bin/test"
-    },
-    "devDependencies": {
-        "typescript": "^2.0.3",
-        "vscode": "^1.0.0",
-        "mocha": "^2.3.3",
-        "@types/node": "^6.0.40",
-        "@types/mocha": "^2.2.32"
-    },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/sunhs/py-paste-indent.git"
-    }
+	"name": "py-paste-indent",
+	"displayName": "Python Paste And Indent",
+	"description": "paste and indent for python",
+	"version": "0.0.3",
+	"publisher": "hyesun",
+	"engines": {
+		"vscode": "^1.30.0"
+	},
+	"categories": [
+		"Other"
+	],
+	"activationEvents": [
+		"onLanguage:python"
+	],
+	"main": "./out/extension.js",
+	"contributes": {
+		"commands": [
+			{
+				"command": "pyPasteIndent.pasteIndent",
+				"title": "PyPasteIndent"
+			}
+		]
+	},
+	"scripts": {
+		"vscode:prepublish": "npm run compile",
+		"compile": "tsc -p ./",
+		"watch": "tsc -watch -p ./",
+		"postinstall": "node ./node_modules/vscode/bin/install",
+		"test": "npm run compile && node ./node_modules/vscode/bin/test"
+	},
+	"devDependencies": {
+		"typescript": "^3.1.4",
+		"vscode": "^1.1.25",
+		"tslint": "^5.8.0",
+		"@types/node": "^8.10.25",
+		"@types/mocha": "^2.2.42"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/sunhs/py-paste-indent.git"
+	}
 }
