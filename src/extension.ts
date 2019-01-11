@@ -3,66 +3,66 @@
 import * as vscode from 'vscode';
 
 
-let pasteAndIndent = () => {
-
+let pasteIndent = () => {
     let editor = vscode.window.activeTextEditor;
-    let anchor = editor.selection.anchor;
+    if (editor === undefined)
+        return
 
-    vscode.commands.executeCommand('editor.action.clipboardPasteAction').then(() => {
-        /*
-         * baseOffset: Number of preceding spaces of the first line.
-         * offsetToFirstLine: If the first line ends with ':', the rest lines should first indent by this margin.
-         * indents: Number of preceding spaces of the lines, from the second line. -1 for empty lines.
-         * offsets: Number of preceding spaces of the lines with respect to the second line. -1 for empty lines.
-         * When indenting the pasted text, the first line stays unchanged, with its indentation decided by
-         * other mechanism such as autoindent for python, and is equal to baseOffset.
-         * From the second line on, each line follows n spaces,
-         * where n = baseOffset + offsetToFirstLine + offsets[i].
-         */
-        let cursor = editor.selection.anchor;
-        let selection = new vscode.Selection(anchor, cursor);
-        let offsetToFirstLine = 0;
-        let pastedText = editor.document.getText(selection).split('\n');
+    let baseIndent = editor.selection.active.character,
+        tabSize = Number(editor.options.tabSize),
+        insertSpaces = Boolean(editor.options.insertSpaces);
 
-        if (pastedText[0].endsWith(':')) {
-            offsetToFirstLine = Number(vscode.workspace.getConfiguration('editor').get('tabSize'));
+    vscode.env.clipboard.readText().then((s) => {
+        let lines = s.split('\n');
+        let blockIndent = 0;
+        if (lines[0].endsWith(':')) {
+            if (insertSpaces)
+                blockIndent = tabSize;
+            else
+                blockIndent = 1;
         }
 
-        let baseOffset = anchor.character;
         let indents = [];
-        let offsets = [];
 
-        pastedText.shift();
-
-        pastedText.forEach(line => {
-            indents.push(line.search(/\S/));
-        });
-
-        indents.forEach(e => {
-            if (e !== -1) {
-                offsets.push(e - indents[0]);
-            } else {
-                offsets.push(-1);
-            }
-        });
-
-        pastedText.forEach((line, index) => {
-            let alphaIndex = indents[index];
-            let expression;
+        let firstLineNotEmpty = -1,
+            indentForFirstLineNotEmpty = -1;
+        for (let i = 1; i < lines.length; ++i) {
+            let alphaIndex = lines[i].search(/\S/);
             if (alphaIndex !== -1) {
-                pastedText[index] = ' '.repeat(baseOffset + offsetToFirstLine + offsets[index]) + line.substr(alphaIndex);
+                firstLineNotEmpty = i;
+                indentForFirstLineNotEmpty = alphaIndex;
+                break;
             }
+        }
+
+        for (let i = firstLineNotEmpty; i < lines.length; ++i) {
+            let alphaIndex = lines[i].search(/\S/);
+            if (alphaIndex !== -1) {
+                lines[i] = lines[i].substr(alphaIndex);
+                indents.push(alphaIndex - indentForFirstLineNotEmpty);
+            }
+            else
+                indents.push(-1);
+        }
+
+        let blank = ' ';
+        if (!insertSpaces)
+            blank = '\t';
+
+        indents.forEach((indent, i) => {
+            let lineIndex = i + firstLineNotEmpty;
+            if (indent !== -1)
+                lines[lineIndex] = blank.repeat(baseIndent + blockIndent + indent) + lines[lineIndex];
         });
 
-        let modSelection = new vscode.Selection(anchor.line + 1, 0, cursor.line, cursor.character);
-        editor.edit((editBuilder: vscode.TextEditorEdit) => {
-            editBuilder.replace(modSelection, pastedText.join('\n'));
-        });
-    })
+        let newContent = lines.join('\n');
+        vscode.env.clipboard.writeText(newContent);
+        vscode.commands.executeCommand('editor.action.clipboardPasteAction');
+    });
 }
 
 export function activate(context: vscode.ExtensionContext) {
-    context.subscriptions.push(vscode.commands.registerCommand('pyPasteIndent.pasteAndIndent', pasteAndIndent));
+    context.subscriptions.push(vscode.commands.registerCommand('pyPasteIndent.pasteIndent', pasteIndent));
 }
 
 export function deactivate() {
