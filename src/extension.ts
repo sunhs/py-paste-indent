@@ -59,9 +59,9 @@ let pasteIndent = () => {
                 lines[lineIndex] = blank.repeat(baseIndent + blockIndent + indent) + lines[lineIndex];
         });
 
-        let newContent = lines.join('\n');
-        vscode.env.clipboard.writeText(newContent);
-        vscode.commands.executeCommand('editor.action.clipboardPasteAction');
+        vscode.env.clipboard.writeText(lines.join('\n')).then(() => {
+            vscode.commands.executeCommand('editor.action.clipboardPasteAction');
+        });
     });
 }
 
