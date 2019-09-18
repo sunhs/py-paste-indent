@@ -26,7 +26,7 @@ Example keybinding code, using <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>v</kbd> to 
 ## Change Logs
 - version 0.1.2
 
-  When a line ends with "(", "\[" or "{", the next line should be indented.
+  When a line ends with `(`, `[` or `{`, the next line should be indented.
 
 - version 0.1.1
   
