@@ -5,9 +5,11 @@ import { linkSync } from 'fs';
 
 
 let pasteIndent = () => {
+    const EndChar = [':', '(', '[', '{'];
+
     let editor = vscode.window.activeTextEditor;
     if (editor === undefined)
-        return
+        return;
 
     let baseIndent = editor.selection.active.character,
         tabSize = Number(editor.options.tabSize),
@@ -19,11 +21,12 @@ let pasteIndent = () => {
             return;
 
         let blockIndent = 0;
-        if (lines[0].endsWith(':')) {
-            if (insertSpaces)
-                blockIndent = tabSize;
-            else
-                blockIndent = 1;
+        for (var endChar of EndChar) {
+            if (lines[0].endsWith(endChar))
+                if (insertSpaces)
+                    blockIndent = tabSize;
+                else
+                    blockIndent = 1;
         }
 
         let indents = [];
