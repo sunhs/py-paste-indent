@@ -12,7 +12,16 @@ This feature utilizes other auto indent mechanism to indent the first line. For 
 Bind your preferred keyboard shortcut to the command:
 
     pyPasteIndent.pasteIndent
+    
+Example keybinding code, using <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>v</kbd> to execute `pyPasteIndent.pasteIndent` when editing Python Code:
 
+```json
+{
+  "key": "ctrl+shift+v",
+  "command": "pyPasteIndent.pasteIndent",
+  "when": "editorLangId == 'python'"
+}
+```
 
 ## Change Logs
 - version 0.0.2
