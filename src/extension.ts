@@ -1,7 +1,6 @@
 'use strict';
 
 import * as vscode from 'vscode';
-import { linkSync } from 'fs';
 
 
 let pasteIndent = () => {
@@ -16,9 +15,22 @@ let pasteIndent = () => {
         insertSpaces = Boolean(editor.options.insertSpaces);
 
     vscode.env.clipboard.readText().then((s) => {
-        let lines = s.split('\n');
-        if (linkSync.length <= 1)
+        let sep = '\n';
+        if (s.indexOf('\r\n') != -1)
+            sep = '\r\n';
+
+        let lines = s.split(sep);
+        if (lines.filter((line) => {
+            return line != '';
+        }).length <= 1) {
+        // if (lines[lines.length - 1] == '')
+        //     lines.pop();
+        // if (lines.length <= 1) {
+            vscode.env.clipboard.writeText(s).then(() => {
+                vscode.commands.executeCommand('editor.action.clipboardPasteAction');
+            });
             return;
+        }
 
         let blockIndent = 0;
         for (var endChar of EndChar) {
