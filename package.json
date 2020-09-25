@@ -2,10 +2,10 @@
 	"name": "py-paste-indent",
 	"displayName": "Python Paste And Indent",
 	"description": "paste and indent for python",
-	"version": "0.1.2",
+	"version": "0.1.4",
 	"publisher": "hyesun",
 	"engines": {
-		"vscode": "^1.30.0"
+		"vscode": "^1.40.0"
 	},
 	"categories": [
 		"Other"
@@ -25,19 +25,19 @@
 	"scripts": {
 		"vscode:prepublish": "npm run compile",
 		"compile": "tsc -p ./",
-		"watch": "tsc -watch -p ./",
-		"postinstall": "node ./node_modules/vscode/bin/install",
-		"test": "npm run compile && node ./node_modules/vscode/bin/test"
+		"watch": "tsc -watch -p ./"
 	},
 	"devDependencies": {
-		"typescript": "^3.1.4",
-		"vscode": "^1.1.25",
-		"tslint": "^5.8.0",
-		"@types/node": "^8.10.25",
-		"@types/mocha": "^2.2.42"
+		"@types/node": "^8.10.64",
+		"@types/vscode": "^1.40.0",
+		"tslint": "^5.20.1",
+		"typescript": "^3.9.7"
 	},
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/sunhs/py-paste-indent.git"
+	},
+	"dependencies": {
+		"@types/vscode": "^1.40.0"
 	}
 }

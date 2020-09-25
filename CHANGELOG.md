@@ -1,7 +1,26 @@
 # Change Log
-All notable changes to the "py-paste-indent" extension will be documented in this file.
 
-Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
+## 0.1.4
 
-## [Unreleased]
-- Initial release
+ - Bug fixes.
+ - Enables pasting for a single line.
+
+## 0.1.2
+
+ - When a line ends with `(`, `[` or `{`, the next line should be indented.
+
+## 0.1.1
+  
+ - Fix bugs.
+
+## 0.0.3
+
+  ![image](images/record.gif)
+
+ - The command is changed from `pyPasteIndent.pasteAndIndent` to `pyPasteIndent.pasteIndent`.
+ - Directly rewrite the clipboard content so that no "content flash" would appear.
+ - In order to access the clipboard API, update your vscode. This version is tested on vscode 1.30.1.
+
+## 0.0.2
+
+  ![image](images/ver002.gif)
