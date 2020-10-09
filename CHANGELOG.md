@@ -1,5 +1,10 @@
 # Change Log
 
+## 0.1.5
+
+ - Optimized for speed.
+ - Fixed for pasting into a selected region.
+
 ## 0.1.4
 
  - Bug fixes.
