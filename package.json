@@ -2,7 +2,7 @@
 	"name": "py-paste-indent",
 	"displayName": "Python Paste And Indent",
 	"description": "paste and indent for python",
-	"version": "0.1.4",
+	"version": "0.1.5",
 	"publisher": "hyesun",
 	"engines": {
 		"vscode": "^1.40.0"

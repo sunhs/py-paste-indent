@@ -22,3 +22,8 @@ Example keybinding code, using <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>v</kbd> to 
   "when": "editorLangId == 'python'"
 }
 ```
+
+
+## Screenshot
+
+  ![image](images/record.gif)
