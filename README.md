@@ -12,7 +12,7 @@ This feature utilizes other auto indent mechanism to indent the first line. For 
 Bind your preferred keyboard shortcut to the command:
 
     pyPasteIndent.pasteIndent
-    
+
 Example keybinding code, using <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>v</kbd> to execute `pyPasteIndent.pasteIndent` when editing Python Code:
 
 ```json
@@ -26,4 +26,4 @@ Example keybinding code, using <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>v</kbd> to 
 
 ## Screenshot
 
-  ![image](images/record.gif)
+  ![image](images/v030.gif)

@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.3.0
+
+ - No ident for empty line.
+
 ## 0.1.5
 
  - Optimized for speed.
@@ -15,12 +19,12 @@
  - When a line ends with `(`, `[` or `{`, the next line should be indented.
 
 ## 0.1.1
-  
+
  - Fix bugs.
 
 ## 0.0.3
 
-  ![image](images/record.gif)
+  ![image](images/v003.gif)
 
  - The command is changed from `pyPasteIndent.pasteAndIndent` to `pyPasteIndent.pasteIndent`.
  - Directly rewrite the clipboard content so that no "content flash" would appear.
@@ -28,4 +32,4 @@
 
 ## 0.0.2
 
-  ![image](images/ver002.gif)
+  ![image](images/v002.gif)
