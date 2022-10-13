@@ -24,14 +24,14 @@ let pasteIndent = () => {
 
         let lines = s.split(sep),
             nonEmptyCnt = 0,
-            firstLineNotEmpty = -1,
-            indentForFirstLineNotEmpty = -1;
+            secondNotEmptyLine = -1,
+            indentForSecondNotEmptyLine = -1;
         for (var i = 0; i < lines.length; ++i) {
             if (lines[i].trim() != '') {
                 ++nonEmptyCnt;
-                if (i != 0 && firstLineNotEmpty == -1 && indentForFirstLineNotEmpty == -1) {
-                    firstLineNotEmpty = i;
-                    indentForFirstLineNotEmpty = lines[i].search(/\S/);
+                if (i != 0 && secondNotEmptyLine == -1 && indentForSecondNotEmptyLine == -1) {
+                    secondNotEmptyLine = i;
+                    indentForSecondNotEmptyLine = lines[i].search(/\S/);
                 }
             }
             if (nonEmptyCnt > 1)
@@ -53,11 +53,13 @@ let pasteIndent = () => {
             }
         }
 
-        let diff = baseIndent + blockIndent - indentForFirstLineNotEmpty;
+        let diff = baseIndent + blockIndent - indentForSecondNotEmptyLine;
         if (diff != 0) {
-            for (let i = firstLineNotEmpty; i < lines.length; ++i) {
+            for (let i = secondNotEmptyLine; i < lines.length; ++i) {
+                if (lines[i].trim() == '')
+                    continue;
                 if (diff < 0)
-                    lines[i] = lines[i].substr(-diff);
+                    lines[i] = lines[i].substring(-diff);
                 else if (diff > 0)
                     lines[i] = blank.repeat(diff) + lines[i];
             }
