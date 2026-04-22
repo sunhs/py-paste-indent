@@ -5,3 +5,4 @@ node_modules
 .zao
 test.py
 AGENTS.md
+*.vsix
