@@ -1,8 +1,13 @@
 # Change Log
 
+## 0.4.0
+
+ - Supports usecase where pasted code has leading indentation (#13).
+ - Extracted indent calculation logic into a pure function (`adjustIndent`) for testability.
+
 ## 0.3.0
 
- - No ident for empty line.
+ - No indent for empty line.
 
 ## 0.1.5
 

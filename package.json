@@ -2,7 +2,7 @@
 	"name": "py-paste-indent",
 	"displayName": "Python Paste And Indent",
 	"description": "paste and indent for python",
-	"version": "0.3.0",
+	"version": "0.4.0",
 	"publisher": "hyesun",
 	"extensionKind": [
 		"ui"
