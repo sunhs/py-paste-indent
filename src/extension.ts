@@ -1,71 +1,33 @@
 'use strict';
 
 import * as vscode from 'vscode';
+import { adjustIndent, IndentConfig } from './indent';
 
 
 let pasteIndent = () => {
-    const EndChar = [':', '(', '[', '{'];
-
     let editor = vscode.window.activeTextEditor;
     if (editor === undefined)
         return;
 
     let baseIndent = editor.selection.start.character,
         insertSpaces = Boolean(editor.options.insertSpaces),
-        tabSize = Number(editor.options.tabSize),
-        blank = ' ';
-    if (!insertSpaces)
-        blank = '\t';
+        tabSize = Number(editor.options.tabSize);
 
     vscode.env.clipboard.readText().then((s) => {
         let sep = '\n';
         if (s.indexOf('\r\n') != -1)
             sep = '\r\n';
 
-        let lines = s.split(sep),
-            nonEmptyCnt = 0,
-            secondNotEmptyLine = -1,
-            indentForSecondNotEmptyLine = -1;
-        for (var i = 0; i < lines.length; ++i) {
-            if (lines[i].trim() != '') {
-                ++nonEmptyCnt;
-                if (i != 0 && secondNotEmptyLine == -1 && indentForSecondNotEmptyLine == -1) {
-                    secondNotEmptyLine = i;
-                    indentForSecondNotEmptyLine = lines[i].search(/\S/);
-                }
-            }
-            if (nonEmptyCnt > 1)
-                break;
-        }
-        if (nonEmptyCnt <= 1) {
+        let lines = s.split(sep);
+        const config: IndentConfig = { baseIndent, insertSpaces, tabSize };
+
+        const adjusted = adjustIndent(lines, config);
+        if (adjusted === null) {
             vscode.commands.executeCommand('editor.action.clipboardPasteAction');
             return;
         }
 
-        let blockIndent = 0;
-        for (var endChar of EndChar) {
-            if (lines[0].endsWith(endChar)) {
-                if (insertSpaces)
-                    blockIndent = tabSize;
-                else
-                    blockIndent = 1;
-                break;
-            }
-        }
-
-        let diff = baseIndent + blockIndent - indentForSecondNotEmptyLine;
-        if (diff != 0) {
-            for (let i = secondNotEmptyLine; i < lines.length; ++i) {
-                if (lines[i].trim() == '')
-                    continue;
-                if (diff < 0)
-                    lines[i] = lines[i].substring(-diff);
-                else if (diff > 0)
-                    lines[i] = blank.repeat(diff) + lines[i];
-            }
-        }
-
-        vscode.env.clipboard.writeText(lines.join('\n')).then(() => {
+        vscode.env.clipboard.writeText(adjusted.join('\n')).then(() => {
             vscode.commands.executeCommand('editor.action.clipboardPasteAction');
         });
     });
